@@ -19,7 +19,7 @@ def get_keys():
     return EXCEL_FILE_PATH, SLACK_WEBHOOK_URL_TOME, SLACK_WEBHOOK_URL_TOSTUFF
 
 
-def get_excel_data(EXCEL_FILE_PATH: str):
+def get_excel_data(EXCEL_FILE_PATH):
     """日報データのワークシートを取得する
 
     Args:
