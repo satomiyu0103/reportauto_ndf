@@ -4,6 +4,7 @@
 
 from datetime import datetime
 import requests
+from pathlib import Path
 
 
 def send_report(message: str, SLACK_WEBHOOK_URL: str):
@@ -25,11 +26,10 @@ def send_report(message: str, SLACK_WEBHOOK_URL: str):
         print("本日分の報告が未記入です")
 
 
-def write_log():
+def write_log(logs_path, logs_message):
     # 起動ログを取る
-    with open(
-        r"logs\autoreport_tostuff.text",
-        "a",
-        encoding="utf-8",
-    ) as f:
-        f.write("実行されたよ！ → " + str(datetime.now()) + "\n")
+    Path(logs_path).parent.mkdir(parents=True, exist_ok=True)
+
+    line = logs_message if isinstance(logs_message, str) else "実行されたよ！"
+    with Path(logs_path).open(mode="a", encoding="utf-8", newline="\n") as f:
+        f.write(f"{line} →  {datetime.now()} \n")

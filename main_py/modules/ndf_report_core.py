@@ -11,8 +11,6 @@ from pathlib import Path
 
 def get_keys():
     # configファルダの中にある.envファイルの場所を指定する
-    env_path = r"config\.env"
-    load_dotenv(env_path)
     EXCEL_FILE_PATH = os.getenv("EXCEL_FILE_PATH")
     SLACK_WEBHOOK_URL_TOME = os.getenv("SLACK_WEBHOOK_URL_TOME")
     SLACK_WEBHOOK_URL_TOSTUFF = os.getenv("SLACK_WEBHOOK_URL_TOSTUFF")
