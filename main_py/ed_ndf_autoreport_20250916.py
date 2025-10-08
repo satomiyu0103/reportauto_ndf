@@ -16,7 +16,11 @@ from modules.ndf_report_delivery import send_report, write_log
 
 
 def main():
-    env_path = Path(r"config/.env")
+    try:
+        PROJECT_ROOT = Path(__file__).resolve().parent.parent
+    except NameError:
+        PROJECT_ROOT = Path.cwd()
+    env_path = PROJECT_ROOT / "config" / ".env"
     load_dotenv(env_path)
     EXCEL_FILE_PATH, SLACK_WEBHOOK_URL_TOME, SLACK_WEBHOOK_URL_TOSTUFF = get_keys()
     ws = get_excel_data(EXCEL_FILE_PATH)
@@ -27,10 +31,6 @@ def main():
     else:
         message = write_ed_msg(report_dict)
         send_report(message, SLACK_WEBHOOK_URL_TOSTUFF)
-        try:
-            PROJECT_ROOT = Path(__file__).resolve().parent.parent
-        except NameError:
-            PROJECT_ROOT = Path.cwd()
 
         logs_dir = PROJECT_ROOT / "logs"
         logs_dir.mkdir(parents=True, exist_ok=True)
