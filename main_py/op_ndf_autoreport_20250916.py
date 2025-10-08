@@ -27,7 +27,7 @@ def main():
         pass
     else:
         message = write_op_msg(report_dict)
-        send_report(message, SLACK_WEBHOOK_URL_TOME)
+        send_report(message, SLACK_WEBHOOK_URL_TOSTUFF)
         try:
             PROJECT_ROOT = Path(__file__).resolve().parent.parent
         except NameError:
