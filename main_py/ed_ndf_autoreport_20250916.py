@@ -26,7 +26,7 @@ def main():
     ws = get_excel_data(EXCEL_FILE_PATH)
     report = get_today_report(ws)
     report_dict = upack_report(report)
-    if report_dict["通所形態"] == "休日":
+    if report_dict["通所形態"] in ["休日", "在宅(午前のみ)", "通所", "職場実習"]:
         pass
     else:
         message = write_ed_msg(report_dict)
