@@ -4,6 +4,7 @@
 
 import os
 from datetime import datetime, timedelta
+from pathlib import Path
 
 
 def get_daytime(line):
@@ -20,11 +21,15 @@ def get_daytime(line):
     return log_date
 
 
-def clean_old_logs():
+def main():
     """30日以上前の起動ログを選択して削除する"""
     # logファイルのパス
-    log_file = r"logs\autoreport_tostuff.text"
-    temp_file = log_file + ".tmp"
+    try:
+        PROJECT_ROOT = Path(__file__).resolve().parent.parent
+    except NameError:
+        PROJECT_ROOT = Path.cwd()
+    log_file = PROJECT_ROOT / "logs" / "autoreport_tostuff.text"
+    temp_file = log_file.with_name(log_file.name + ".tmp")
 
     # 保持する期間
     retention_days = 30
@@ -35,7 +40,7 @@ def clean_old_logs():
         open(temp_file, "w", encoding="utf-8") as out,
     ):
         for line in f:
-            # ログの書式は"実行されたよ！ → YYYY-MM-DD HH:MM:SS.microseconds"を想定
+            # ログの書式は"〇〇の報告PRGが実行されました → YYYY-MM-DD HH:MM:SS.microseconds"を想定
             if "→" in line:
                 try:
                     log_date = get_daytime(line)
@@ -54,4 +59,4 @@ def clean_old_logs():
 
 
 if __name__ == "__main__":
-    clean_old_logs()
+    main()
